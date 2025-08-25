@@ -13,7 +13,14 @@ class EmailController extends Controller
         $toEmail = "webdevelopment185@gmail.com";
         $message = "hello wellcome";
         $subject = "wellcome";
+        $details = [
+             'name' => "shari kahna",
+             'product'=> "software",
+             'price' => 250
+        ];
 
-        Mail::to($toEmail)->send(new welcomeemail($message, $subject));
+         $request = Mail::to($toEmail)->send(new welcomeemail($message, $subject,$details));
+
+         dd($request);
      }
 }

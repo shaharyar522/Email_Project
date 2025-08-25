@@ -20,13 +20,15 @@ class welcomeemail extends Mailable
     // Data ko class ke andar lane ka kaam karta hai
     // Jo values tum object banate waqt dete ho, constructor unko receive karke class ke andar store karta hai.
 
-public $mailmessage;
-public $subject;
+    public $mailmessage;
+    public $mailsubject;
+    public $details;
 
-    public function __construct($message, $subject)
+    public function __construct($message, $subject, $details)
     {
         $this->mailmessage = $message;
-        $this->subject = $subject;
+        $this->mailsubject = $subject;
+        $this->details = $details;
     }
 
     /**
@@ -35,7 +37,7 @@ public $subject;
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: $this->subject,
+            subject: $this->mailsubject,
         );
     }
 
@@ -45,7 +47,11 @@ public $subject;
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'mail.welcome-mail',
+            //      with: [
+            //     'bodyMessage' => $this->mailmessage, // change key name
+            //     'mailsubject' => $this->mailsubject,
+            // ],
         );
     }
 
