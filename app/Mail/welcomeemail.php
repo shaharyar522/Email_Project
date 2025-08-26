@@ -3,7 +3,9 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Mail\Attachable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Mail\Attachment;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -20,15 +22,14 @@ class welcomeemail extends Mailable
     // Data ko class ke andar lane ka kaam karta hai
     // Jo values tum object banate waqt dete ho, constructor unko receive karke class ke andar store karta hai.
 
-    public $mailmessage;
-    public $mailsubject;
-    public $details;
+    public $request;
+    public $fileName;
+    // public $details;
 
-    public function __construct($message, $subject, $details)
+    public function __construct($request, $fileName)
     {
-        $this->mailmessage = $message;
-        $this->mailsubject = $subject;
-        $this->details = $details;
+        $this->request = $request;
+        $this->fileName = $fileName;
     }
 
     /**
@@ -37,7 +38,7 @@ class welcomeemail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: $this->mailsubject,
+            subject: "Contact Form",
         );
     }
 
@@ -62,6 +63,16 @@ class welcomeemail extends Mailable
      */
     public function attachments(): array
     {
-        return [];
+        $attachments = [];
+
+        if($this->fileName){
+
+            $attachments = [
+                Attachment::fromPath(public_path('uploads/'. $this->fileName))
+            ];
+
+        }
+        return $attachments;
+
     }
 }

@@ -29,5 +29,30 @@ class EmailController extends Controller
      {
           return view('contact-form');
      }
-     
+
+     public function sendContactEmail(Request $request)
+     {
+          $request->validate([
+               'name'       => 'required|string|max:100',
+               'email'      => 'required|email',
+               'subject'    => 'required|string|max:150',
+               'message'    => 'required|string',
+               'attachment' => 'required|mimes:pdf,doc,docx,xls|max:2048', // fixed docx
+          ]);
+
+          $fileName = time() . "." . $request->file('attachment')->extension();
+
+          $request->file('attachment')->move('uploads', $fileName);
+
+          $adminEmail = "webdevelopment185@gmail.com";
+
+          $responce = Mail::to($adminEmail)->send(new welcomeemail($request->all(), $fileName));
+
+          if($responce){
+               return  back()->with('success', "Thank You for contacting us.");
+          } else {
+               return back()->with('error', "Unable to submitted form, Please try agin");
+          }
+
+     }
 }

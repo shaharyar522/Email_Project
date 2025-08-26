@@ -15,6 +15,8 @@ Route::get('/dashboard', function () {
 Route::get('send-email', [EmailController::class, 'sendEmail']);
 Route::get('contact',[EmailController::class, 'contactForm']);
 
+Route::post('contact',[EmailController::class, 'sendContactEmail'])->name('contact');
+
 Route::middleware('auth')->group(function (){
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

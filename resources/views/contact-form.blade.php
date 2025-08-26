@@ -17,7 +17,7 @@
                     <h4>Contact Us</h4>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="" enctype="multipart/form-data">
+                    <form method="POST" action="{{route('contact')}}" enctype="multipart/form-data">
                         @csrf
 
                         {{-- Name --}}
