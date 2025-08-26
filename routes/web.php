@@ -13,6 +13,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('send-email', [EmailController::class, 'sendEmail']);
+Route::get('contact',[EmailController::class, 'contactForm']);
 
 Route::middleware('auth')->group(function (){
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
